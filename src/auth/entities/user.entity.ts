@@ -20,6 +20,9 @@ export class User {
   @Column()
   name: string;
 
+  @Column('text', { array: true, default: ['user'] })
+  roles: string[];
+
   @CreateDateColumn()
   created_at: Date;
 
