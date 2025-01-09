@@ -14,5 +14,16 @@ services:
       POSTGRES_EXTENSIONS: uuid-ossp pgcrypto
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  app:
+    container_name: restaurant-app
+    build: .
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    depends_on:
+      - db
+
 volumes:
   db_data:
