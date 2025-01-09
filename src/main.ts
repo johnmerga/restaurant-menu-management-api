@@ -6,7 +6,13 @@ import { env } from './common/utils/envConfig';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors({
+    // origin: 'http://localhost:1234',
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // Important for cookies/authentication
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+  });
   const config = new DocumentBuilder()
     .setTitle('Restaurant Menu Management API')
     .setDescription('API for managing restaurant menus')

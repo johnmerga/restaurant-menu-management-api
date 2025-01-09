@@ -17,9 +17,10 @@ import {
   CreateMenuItemSchema,
   UpdateMenuItemSchema,
   GetMenuItemSchema,
+  GetMenuItemsSchema,
 } from './dto/menu-item.dto';
 import { PaginationSchema } from 'src/common/dto/pagination.dto';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiQuery } from '@nestjs/swagger';
 import { zodToOpenAPI } from 'src/common/utils/zod-swagger';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -40,9 +41,13 @@ export class MenuController {
 
   @Get()
   @UseInterceptors(new ZodValidationInterceptor(PaginationSchema))
+  @ApiQuery({
+    name: 'page',
+    default: 1,
+  })
   async findAll(@Query() query: any) {
     const { page, limit } = query;
-    return this.menuService.findAll(page, limit);
+    return this.menuService.findAll(+page, +limit);
   }
 
   @Get(':id')

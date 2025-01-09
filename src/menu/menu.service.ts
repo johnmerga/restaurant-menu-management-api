@@ -17,11 +17,13 @@ export class MenuService {
 
   async findAll(
     page: number,
-    limit: number,
+    limit: number = 10,
   ): Promise<{ data: MenuItem[]; total: number }> {
+    const skip = (page - 1) * limit || 0;
+    const take = limit || 10;
     const [data, total] = await this.menuItemRepository.findAndCount({
-      skip: (page - 1) * limit,
-      take: limit,
+      skip,
+      take,
     });
     return { data, total };
   }
