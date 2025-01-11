@@ -23,6 +23,9 @@ export class MenuItem {
   @Column()
   category: string;
 
+  @Column()
+  photo: string;
+
   @CreateDateColumn()
   created_at: Date;
 

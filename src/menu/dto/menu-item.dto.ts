@@ -4,8 +4,17 @@ export const CreateMenuItemSchema = z.object({
   body: z.object({
     name: z.string().min(1, 'Name is required'),
     description: z.string().min(1, 'Description is required'),
-    price: z.number().min(0, 'Price must be positive'),
+    // the price can be string but converted to number
+    price: z
+      .string()
+      .refine((val) => !isNaN(Number(val)), {
+        message: 'Price must be a number',
+      })
+      .refine((val) => Number(val) > 0, {
+        message: 'Price must be greater than 0',
+      }),
     category: z.string().min(1, 'Category is required'),
+    // photo: z.string().min(1, 'Photo is required'),
   }),
 });
 
